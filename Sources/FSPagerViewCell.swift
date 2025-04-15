@@ -50,42 +50,14 @@ open class FSPagerViewCell: UICollectionViewCell {
     fileprivate let kvoContext = UnsafeMutableRawPointer(bitPattern: 0)
     fileprivate let selectionColor = UIColor(white: 0.2, alpha: 0.2)
     
-    fileprivate weak var _selectedForegroundView: UIView?
-    fileprivate var selectedForegroundView: UIView? {
-        guard _selectedForegroundView == nil else {
-            return _selectedForegroundView
-        }
-        guard let imageView = _imageView else {
-            return nil
-        }
-        let view = UIView(frame: imageView.bounds)
-        imageView.addSubview(view)
-        _selectedForegroundView = view
-        return view
-    }
+
     
     open override var isHighlighted: Bool {
-        set {
-            super.isHighlighted = newValue
-            if newValue {
-                self.selectedForegroundView?.layer.backgroundColor = self.selectionColor.cgColor
-            } else if !super.isSelected {
-                self.selectedForegroundView?.layer.backgroundColor = UIColor.clear.cgColor
-            }
-        }
-        get {
-            return super.isHighlighted
-        }
+        didSet{}
     }
     
     open override var isSelected: Bool {
-        set {
-            super.isSelected = newValue
-            self.selectedForegroundView?.layer.backgroundColor = newValue ? self.selectionColor.cgColor : UIColor.clear.cgColor
-        }
-        get {
-            return super.isSelected
-        }
+        didSet{}
     }
     
     public override init(frame: CGRect) {
@@ -134,9 +106,9 @@ open class FSPagerViewCell: UICollectionViewCell {
                 return rect
             }()
         }
-        if let selectedForegroundView = _selectedForegroundView {
-            selectedForegroundView.frame = self.contentView.bounds
-        }
+//        if let selectedForegroundView = _selectedForegroundView {
+//            selectedForegroundView.frame = self.contentView.bounds
+//        }
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
